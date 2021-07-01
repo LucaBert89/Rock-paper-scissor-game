@@ -5,15 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
+    <div id="myModal" class="modal">
+        
+        <!-- Modal content -->
+        <div class="modal-content">
+         
+          <span class="close">&times;</span>
+          <h1>Welcome to paper, rock, scissor game!</h1>
+          <label for="players">Choose how do you want to play:</label>
+          <select class="start-game__selector" id="players">
+            <option class="start-game__playerNumber" value=""></li>
+            <option class="start-game__playerNumber" value="Cpu vs Cpu">Cpu vs Cpu</li>
+            <option class="start-game__playerNumber" value="Player vs Cpu">Player vs Cpu</li>
+        </select> 
+        </div>
+        <button id="myBtn">Play</button>
+    </div>
     <main class="game-board">
         <div class="game-board__hands">
            
         </div>
         <button class="game-board__play">Play</button>
     </main>
-  
+   
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
