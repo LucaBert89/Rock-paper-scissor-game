@@ -1,0 +1,19 @@
+{
+  "name": "rock-paper-scissor-game",
+  "version": "1.0.0",
+  "description": "a rock, paper, scissor game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucaBert89/Rock-paper-scissor-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LucaBert89/Rock-paper-scissor-game/issues"
+  },
+  "homepage": "https://github.com/LucaBert89/Rock-paper-scissor-game#readme"
+}
