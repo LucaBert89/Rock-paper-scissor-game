@@ -1,4 +1,5 @@
 const playerHand = document.querySelector(".game-board__hands");
+
 // Get the modal
 var modal = document.getElementById("myModal");
 
@@ -31,31 +32,60 @@ selectNofPlayers.addEventListener("change", function(e) {
 
 
 function handCreation() {
+    const gameBoard = document.querySelector(".game-board");
     const selectedValue = localStorage.getItem("selectedValue");
     modal.style.display = "none";
-    possibleChoices.forEach(e => {
-        const container = document.createElement("div");
-        container.className = "game-board__hand";
-        container.innerText = e.hand;
-        playerHand.appendChild(container);
-    })
+    for(i=1; i<=2;i++) {
+        const player = document.createElement("div");
+        player.className = `game-board__player${i}`;
+        playerHand.appendChild(player);
 
-    if(selectedValue === "Cpu vs Cpu") {
-        const cpu1 = cpuChoice();
-        const cpu2 = cpuChoice();
-        if(cpu1 === cpu2) {
-            console.log("pair", cpu1, cpu2);
-        } else {
-            possibleChoices.forEach(e => {
-                if(cpu2 === e.hand && cpu1 === e.beat) {
-                    return console.log("winner cpu2",cpu1, cpu2)
-                } else if(cpu1 === e.hand && cpu2 === e.beat){
-                    return console.log("winner cpu1",cpu1, cpu2);
-                }
+        possibleChoices.forEach(e => {
+            const containerBoard = document.createElement("div");
+            containerBoard.className = "game-board__hand";
+            containerBoard.innerText = e.hand;
+            player.appendChild(containerBoard);
         })
-        }
+            const score = document.createElement("div");
+            score.className = `game-board__score`;
+            score.innerText = 10;
+            player.appendChild(score); 
+    }
+    
+    
+    if(selectedValue === "Cpu vs Cpu") {
+        const score1 = document.querySelector(".game-board__player1").querySelector(".game-board__score");
+        const score2 = document.querySelector(".game-board__player2").querySelector(".game-board__score");
+             setInterval(function() { 
+                const cpu1 = cpuChoice();
+                const cpu2 = cpuChoice();
+                if(score1.innerText > 0 && score2.innerText > 0) {
+                    if(playAlg(cpu1, cpu2) === "loser") {
+                        score2.innerText = score2.innerText -1;
+                    } else {
+                        score1.innerText = score1.innerText -1;
+                    }
+                } else {
+                    clearInterval();
+                }
+              
+            }, 1000);
+
         
-    } 
+        /*while (score.innerText >= 0) {
+            setInterval(function(){ 
+                if(playAlg(cpu1, cpu2) === cpu1) {
+                    score.innerText = score.innerText -1;
+                }
+            }, 1000);
+        }*/
+    } else {
+        playerHand.addEventListener("click", function (e) {
+            const humanPlay = e.target.innerText;
+            const cpu = cpuChoice();
+            playAlg(humanPlay, cpu);
+        })
+    }
 };
 
 
@@ -65,19 +95,23 @@ function cpuChoice () {
     return possibleChoices[random].hand;
 }
 
-playerHand.addEventListener("click", function (e) {
-    const humanPlay = e.target.innerText;
-    possibleChoices.forEach(e => {
-        if(e.hand === humanPlay) {
-            const cpu = cpuChoice();
-            if(humanPlay === cpu) {
-                console.log("pair", humanPlay, cpu);
-            } else if(cpu === e.beat) {
-                console.log("winner",humanPlay, cpu)
-            } else {
-                console.log("loser",humanPlay, cpu);
-            }
-        }
-    })
-})
 
+function playAlg(player1, player2) {
+    if(player1 === player2) {
+        console.log("pair", player1, player2);
+        return "pair";
+    } else {
+        return winner(player1, player2);
+        
+    }
+}
+
+function winner(player1, player2) {
+    for (const e of possibleChoices) {
+        if(player1 === e.hand && player2 === e.beat) {
+            return "winner";
+        } else if(player2 === e.hand && player1 === e.beat){
+            return "loser";
+        }
+    }
+}
