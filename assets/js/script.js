@@ -32,7 +32,8 @@ selectNofPlayers.addEventListener("change", function(e) {
 
 
 function handCreation() {
-    const gameBoard = document.querySelector(".game-board");
+   
+
     const selectedValue = localStorage.getItem("selectedValue");
     modal.style.display = "none";
     for(i=1; i<=2;i++) {
@@ -52,43 +53,78 @@ function handCreation() {
             player.appendChild(score); 
     }
     
-    
+    const score1 = document.querySelector(".game-board__player1").querySelector(".game-board__score");
+    const score2 = document.querySelector(".game-board__player2").querySelector(".game-board__score");
     if(selectedValue === "Cpu vs Cpu") {
-        const score1 = document.querySelector(".game-board__player1").querySelector(".game-board__score");
-        const score2 = document.querySelector(".game-board__player2").querySelector(".game-board__score");
-             setInterval(function() { 
-                const cpu1 = cpuChoice();
-                const cpu2 = cpuChoice();
+           const scoreManagment = setInterval(score, 1000);
+            function score () { 
                 if(score1.innerText > 0 && score2.innerText > 0) {
+                    const cpu1 = cpuChoice();
+                    const cpu2 = cpuChoice();
+                    handAnimation(cpu1, cpu2);
                     if(playAlg(cpu1, cpu2) === "loser") {
-                        score2.innerText = score2.innerText -1;
-                    } else {
-                        score1.innerText = score1.innerText -1;
-                    }
+                        score1.innerText = score2.innerText -1;
+                    } else if(playAlg(cpu1, cpu2) === "winner") {
+                        score2.innerText = score1.innerText -1;
+                    } 
                 } else {
-                    clearInterval();
+                    
+                    clearInterval(scoreManagment);
+                    winnerReport(score1, score2); 
+                    playAgain();
                 }
               
-            }, 1000);
-
-        
-        /*while (score.innerText >= 0) {
-            setInterval(function(){ 
-                if(playAlg(cpu1, cpu2) === cpu1) {
-                    score.innerText = score.innerText -1;
-                }
-            }, 1000);
-        }*/
+            }
     } else {
-        playerHand.addEventListener("click", function (e) {
-            const humanPlay = e.target.innerText;
-            const cpu = cpuChoice();
-            playAlg(humanPlay, cpu);
-        })
-    }
+        document.querySelector(".game-board__player1").querySelectorAll(".game-board__hand").forEach(e => {
+            e.addEventListener("click", handChoice)
+            function handChoice (e) {
+                if(score1.innerText > 0 && score2.innerText > 0) {
+                    const humanPlay = e.target.innerText;
+                    const cpu = cpuChoice();
+                    handAnimation(humanPlay, cpu);
+                    if(playAlg(humanPlay, cpu) === "loser") {
+                        console.log(playAlg(humanPlay, cpu))
+                        score1.innerText = score1.innerText -1;
+                    } else if(playAlg(humanPlay, cpu) === "winner") {
+                        score2.innerText = score2.innerText -1;
+                    } 
+                } else {
+                    document.querySelector(".game-board__player1").querySelectorAll(".game-board__hand").forEach(e => {e.removeEventListener("click", handChoice)});
+                    winnerReport(score1, score2); 
+                    playAgain();
+                }
+        }
+    })}
 };
 
+function handAnimation(player1, player2) {
+    document.querySelector(".game-board__player1").querySelectorAll(".game-board__hand").forEach(e=> e.style.color = "black");
+    document.querySelector(".game-board__player2").querySelectorAll(".game-board__hand").forEach(e=> e.style.color = "black");
+    
+    document.querySelector(".game-board__player1").querySelectorAll(".game-board__hand").forEach(e =>{
+        if(e.innerText === player1) {
+            e.style.color = "red";
+        }
+    })
+    document.querySelector(".game-board__player2").querySelectorAll(".game-board__hand").forEach(e =>{
+        if(e.innerText === player2) {
+            e.style.color = "red";
+        }
+    })
+}
 
+function winnerReport(score1, score2) {
+    const result = document.createElement("div");
+    result.className = "game-board__result";
+    playerHand.appendChild(result);
+    console.log(score1.innerText== 0, score2.innerText == 0);
+    if(score1.innerText == 0) {
+        result.innerText = "player2 win"
+    } else if(score2.innerText == 0) {
+        result.innerText = "player1 win"
+    }
+}
 
 function cpuChoice () {
     const random = Math.floor(Math.random() * possibleChoices.length);
@@ -109,9 +145,26 @@ function playAlg(player1, player2) {
 function winner(player1, player2) {
     for (const e of possibleChoices) {
         if(player1 === e.hand && player2 === e.beat) {
+            console.log(player1, player2)
             return "winner";
         } else if(player2 === e.hand && player1 === e.beat){
+            console.log(player1, player2)
             return "loser";
         }
     }
+}
+
+function playAgain() {
+    const playAgainBtn = document.createElement("div");
+    playAgainBtn.className = "game-board__play-again"
+    playAgainBtn.innerText = "do you want to play?"
+    playerHand.appendChild(playAgainBtn);
+
+    playAgainBtn.addEventListener("click", function() {
+        localStorage.removeItem("selectedValue");
+        modal.style.display = "block";
+        selectNofPlayers.selectedIndex = 0;
+        playerHand.innerHTML = "";
+    })
+    
 }
