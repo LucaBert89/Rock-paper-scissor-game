@@ -3,11 +3,10 @@ import { battle } from "./gameBattle.js";
 
 const modal = document.getElementById("myModal");
 const openGame = document.getElementById("myBtn");
+const selectPlayers = document.querySelector("#players");
 
 
 openGame.addEventListener("click", handCreation);
-
-const selectPlayers = document.querySelector("#players");
 
 selectPlayers.addEventListener("change", function(e) {
     localStorage.setItem("selectedValue", e.target.value);
@@ -44,3 +43,5 @@ function playerAndScore(i, playerHand) {
         player.appendChild(score); 
 }
 
+
+export {modal, selectPlayers}

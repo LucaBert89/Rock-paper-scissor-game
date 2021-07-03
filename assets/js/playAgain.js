@@ -1,4 +1,6 @@
 
+import {modal, selectPlayers} from "./script.js";
+
 function winnerReport(score1, score2, playerHand) {
     const result = document.createElement("div");
     result.className = "game-board__result";
