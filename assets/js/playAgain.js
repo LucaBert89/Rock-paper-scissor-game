@@ -1,5 +1,6 @@
 
 function winnerReport(score1, score2, playerHand) {
+    // game is ended and a report appear with the winner
     const result = document.createElement("div");
     result.className = "game-board__result";
     playerHand.appendChild(result);
@@ -15,11 +16,13 @@ function endGame(score1, score2) {
 }
 
 function playAgain(playerHand, modal) {
+    // you want to play again div is created
     const playAgainBtn = document.createElement("div");
     playAgainBtn.className = "game-board__play-again"
     playAgainBtn.innerText = "do you want to play?"
     playerHand.appendChild(playAgainBtn);
 
+    // clicking on playAgain the game'll start over and the value of the previous game are deleted
     playAgainBtn.addEventListener("click", function() {
         localStorage.removeItem("selectedValue");
         modal.style.display = "block";

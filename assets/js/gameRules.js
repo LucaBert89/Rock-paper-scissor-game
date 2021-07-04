@@ -1,14 +1,14 @@
 export const possibleChoices = [
     {
         hand: "rock",
-        beat: "scissor"
+        loser: "scissor"
     },
     {
         hand: "paper",
-        beat: "rock"
+        loser: "rock"
     },
     {
         hand: "scissor",
-        beat: "paper"
+        loser: "paper"
     }
 ];
