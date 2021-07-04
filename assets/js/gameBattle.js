@@ -5,8 +5,8 @@ import {winnerReport, playAgain} from "./playAgain.js";
 
 function battle(selectedValue, playerHand, modal) {
     const gameBoard = document.querySelector(".game-board");
-    const score1 = document.querySelector(".game-board__player1").querySelector(".game-board__score");
-    const score2 = document.querySelector(".game-board__player2").querySelector(".game-board__score");
+    const score1 = document.querySelector(".game-board__player1").querySelector(".game-board__score").querySelector(".game-board__score-total");
+    const score2 = document.querySelector(".game-board__player2").querySelector(".game-board__score").querySelector(".game-board__score-total");
 
     // difference function if you choose a Cpu vs cpu or human vs cpu type of game
     if(selectedValue === "Cpu vs Cpu") {
@@ -23,20 +23,13 @@ function cpuVsCpu(score1, score2, gameBoard, modal, playerHand) {
         const cpu1 = cpuRandom();
         const cpu2 =cpuRandom();
         //if the scores are bigger than 0 the game continues else interval stops and the report appear
-        if(score1.innerText > 0 && score2.innerText > 0) {
-            handAnimation(cpu1, cpu2);
-            return playAlg(cpu1, cpu2) === "player2 winner"? score1.innerText = scoreResult(cpu1, cpu2, score1.innerText) : score2.innerText = scoreResult(cpu1, cpu2, score2.innerText);
-        } else {
-            clearInterval(scoreManagment);
-            winnerReport(score1.innerText, score2.innerText, gameBoard); 
-            playAgain(gameBoard, modal, playerHand);
-        }
-      
+        return (score1.innerText > 0 && score2.innerText > 0) ? gameFlow(score1, score2, cpu1, cpu2) : (clearInterval(scoreManagment), startOver(score1, score2, gameBoard, modal, playerHand))
     }
 }
 
 function humanVsCpu(score1, score2, gameBoard,modal, playerHand) {
         const playerChoice = document.querySelector(".game-board__player1").querySelectorAll(".game-board__hand");
+        //control variable to avoid clicking after the game is finished
         let game = true;
         playerChoice.forEach(e => {
             playerChoice.forEach(event => event.removeEventListener("click", handChoice));
@@ -46,27 +39,27 @@ function humanVsCpu(score1, score2, gameBoard,modal, playerHand) {
                 const humanPlay = e.target.getAttribute("data");
                 const cpu = cpuRandom();
                 if(game) {
-                    if(score1.innerText > 0 && score2.innerText > 0) {
-                    
-                        handAnimation(humanPlay, cpu);
-                        /* this ternary operator is made to make the scoreResult function testable, 
-                        depending on the winner of each round the score of the opponent'll update
-                        */
-                        return playAlg(humanPlay, cpu) === "player2 winner"? score1.innerText = scoreResult(humanPlay, cpu, score1.innerText) : score2.innerText = scoreResult(humanPlay, cpu, score2.innerText);
-                    } else {
-                        game = false;
-                        // the game ends and you can't click anymore, a winnerReport and playAgain is called
-                        playerChoice.forEach(event => event.removeEventListener("click", handChoice));
-                        winnerReport(score1.innerText, score2.innerText, gameBoard); 
-                        playAgain(gameBoard, modal, playerHand);
-                    }
+                    // the game ends and you can't click anymore, a winnerReport and playAgain is called
+                    return (score1.innerText > 0 && score2.innerText > 0) ? gameFlow(score1, score2, humanPlay, cpu) : (game = false, startOver(score1, score2, gameBoard, modal, playerHand));
                 } else {
                     return;
                 }
-             
             }
         })
     }
+}
+
+function startOver(score1, score2, gameBoard, modal, playerHand) {
+    winnerReport(score1.innerText, score2.innerText, gameBoard); 
+    playAgain(gameBoard, modal, playerHand);
+}
+
+function gameFlow(score1, score2, humanPlay, cpu) {
+        handAnimation(humanPlay, cpu);
+        /* this ternary operator is made to make the scoreResult function testable, 
+        depending on the winner of each round the score of the opponent'll update
+        */
+        return playAlg(humanPlay, cpu) === "player2 winner"? score1.innerText = scoreResult(humanPlay, cpu, score1.innerText) : score2.innerText = scoreResult(humanPlay, cpu, score2.innerText);
 }
 
 function cpuRandom () {

@@ -24,26 +24,13 @@
     background-color: rgba(0,0,0,0.4); 
 }
  
-.start-game__modal-content h1{
-  margin:60px;
-}
-.start-game__modal-content .start-game__selector{
-  margin-bottom: 20px;
-}
 
-.start-game__modal-content label{
-  margin:0px;
-}
-
-.start-game__modal-content .start-game__btn{
-  margin:0px;
-}
 
   /* Modal Content/Box */
   .start-game__modal-content {
     background-color: #c59595;
     margin: 10% auto;
-    height:60%;
+    height:80%;
     border: 1px solid #888;
     border-radius: 20px;
     width: 80%; 
@@ -53,16 +40,31 @@
     flex-direction: column;
   }
 
+  .start-game__modal-content h1{
+    margin:30px;
+  }
+  .start-game__modal-content .start-game__selector{
+    margin-bottom: 20px;
+  }
+  
+  .start-game__modal-content label{
+    margin:0px;
+  }
+  
+  .start-game__modal-content .start-game__btn{
+    margin:0px;
+  }
+
 .start-game__selector {
-  width: 20%;
-  height: 10%;
+  width: 50%;
+  height: 5%;
   margin:20px;
   font-size:10px;
   background-color:#227A86;
   border-radius: 20px;
   border-color: #fff;
   color:#fff;
-  font-size:20px;
+  font-size:12px;
 }
 
 .start-game__btn{
@@ -85,22 +87,23 @@ body {
   justify-content: center;
   align-items: center;
   height: 500px;
+  margin-bottom:70px;
 }
 
 .game-board__hand {
   padding-bottom:30px;
-  width: 80px;
+  width: 40px;
 }
 
 .game-board__score {
   color:#fff;
-  font-size:40px;
+  font-size:20px;
 }
 
 .game-board__result {
   text-align: center;
   color:#fff;
-  font-size:40px;
+  font-size:20px;
 }
 
 .game-board__player1, .game-board__player2 {
@@ -121,10 +124,47 @@ body {
   cursor:pointer;
   color:#fff;
   margin-bottom:5px;
-  width:12%;
+  width:50%;
 }
 
 .game-board__play-again:hover {
   color:#227A86;
   background-color: #fff;
+}
+
+
+@media all and (min-width: 480px) {
+  .start-game__modal-content {
+    height:60%;
+  }
+
+  .start-game__modal-content h1{
+    margin:60px;
+  }
+
+  .game-board__hands {
+    margin-bottom:0px;
+  }
+
+  .start-game__selector {
+    height: 10%;
+    width: 20%;
+    font-size:20px;
+  }
+  
+  .game-board__hand {
+    width: 80px;
+  }
+
+  .game-board__score {
+    font-size:40px;
+  }
+
+  .game-board__result {
+    font-size:40px;
+  }
+
+  .game-board__play-again {
+    width:12%;
+  }
 }

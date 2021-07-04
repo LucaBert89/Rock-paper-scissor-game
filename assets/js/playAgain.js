@@ -28,7 +28,7 @@ function playAgain(gameBoard, modal, playerHand) {
         document.querySelector("#players").selectedIndex = 0;
         document.querySelectorAll(".game-board__result").forEach(e => e.innerHTML = "");
         playerHand.innerHTML = "";
-        playAgainBtn.innerHTML = "";
+        playAgainBtn.remove();
     })
     
 }

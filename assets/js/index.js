@@ -53,7 +53,15 @@ function playerAndScore(i, playerHand) {
     })
         const score = document.createElement("div");
         score.className = `game-board__score`;
-        score.innerText = 10;
+        const scorePlayer = document.createElement("div");
+        scorePlayer.className = "game-board__score-player";
+        scorePlayer.innerText = `player${i} score:`;
+        const scoreNumber = document.createElement("div");
+        scoreNumber.className = "game-board__score-total"
+        scoreNumber.innerText = 10;
+        
+        score.appendChild(scorePlayer);
+        score.appendChild(scoreNumber);
         player.appendChild(score); 
 }
 
