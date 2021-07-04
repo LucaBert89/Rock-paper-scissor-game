@@ -1,19 +1,22 @@
 import { possibleChoices } from "./gameRules.js";
 import { battle } from "./gameBattle.js";
 
-const modal = document.getElementById("myModal");
-const openGame = document.getElementById("myBtn");
-const selectPlayers = document.querySelector("#players");
 
 
-openGame.addEventListener("click", handCreation);
+window.load = (function() {    
+    const openGame = document.querySelector("#myBtn");
+    const selectPlayers = document.querySelector("#players");
 
-selectPlayers.addEventListener("change", function(e) {
-    localStorage.setItem("selectedValue", e.target.value);
-})
+    openGame.addEventListener("click", handCreation);
+    
+    selectPlayers.addEventListener("change", function(e) {
+        localStorage.setItem("selectedValue", e.target.value);
+    })
+
 
 
 function handCreation() {
+    const modal = document.getElementById("myModal");
     const playerHand = document.querySelector(".game-board__hands");
     const selectedValue = localStorage.getItem("selectedValue");
     modal.style.display = "none";
@@ -22,7 +25,7 @@ function handCreation() {
         playerAndScore(i, playerHand);
     }
     
-    battle(selectedValue, playerHand);
+    battle(selectedValue, playerHand, modal);
     
 };
 
@@ -43,5 +46,4 @@ function playerAndScore(i, playerHand) {
         player.appendChild(score); 
 }
 
-
-export {modal, selectPlayers}
+})();

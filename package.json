@@ -4,7 +4,7 @@
   "description": "a rock, paper, scissor game",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --env=jsdom"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,14 @@
   "bugs": {
     "url": "https://github.com/LucaBert89/Rock-paper-scissor-game/issues"
   },
-  "homepage": "https://github.com/LucaBert89/Rock-paper-scissor-game#readme"
+  "homepage": "https://github.com/LucaBert89/Rock-paper-scissor-game#readme",
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.14.5",
+    "jest": "^27.0.6"
+  },
+  "dependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "babel-jest": "^27.0.6"
+  }
 }

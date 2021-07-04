@@ -1,16 +1,16 @@
 import { possibleChoices } from "./gameRules.js";
 import {winnerReport, playAgain} from "./playAgain.js";
 
-function battle(selectedValue, playerHand) {
+function battle(selectedValue, playerHand, modal) {
     const score1 = document.querySelector(".game-board__player1").querySelector(".game-board__score");
     const score2 = document.querySelector(".game-board__player2").querySelector(".game-board__score");
     if(selectedValue === "Cpu vs Cpu") {
-        return cpuVsCpu(score1, score2, playerHand);
+        return cpuVsCpu(score1, score2, playerHand, modal);
     } else {
-        return humanVsCpu(score1, score2, playerHand);
+        return humanVsCpu(score1, score2, playerHand, modal);
 }
 
-function cpuVsCpu(score1, score2) {
+function cpuVsCpu(score1, score2, playerHand, modal) {
     const scoreManagment = setInterval(score, 1000);
     function score () { 
         const cpu1 = cpuChoice();
@@ -20,14 +20,14 @@ function cpuVsCpu(score1, score2) {
             scoreResult(cpu1, cpu2, score1,score2);
         } else {
             clearInterval(scoreManagment);
-            winnerReport(score1, score2, playerHand); 
-            playAgain(playerHand);
+            winnerReport(score1.innerText, score2.innerText, playerHand); 
+            playAgain(playerHand, modal);
         }
       
     }
 }
 
-function humanVsCpu(score1, score2, playerHand) {
+function humanVsCpu(score1, score2, playerHand,modal) {
     const playerChoice = document.querySelector(".game-board__player1").querySelectorAll(".game-board__hand");
     playerChoice.forEach(e => {
         e.addEventListener("click", handChoice)
@@ -36,11 +36,11 @@ function humanVsCpu(score1, score2, playerHand) {
             const cpu = cpuChoice();
             if(score1.innerText > 0 && score2.innerText > 0) {
                 handAnimation(humanPlay, cpu);
-                return scoreResult(humanPlay, cpu, score1,score2);
+                return playAlg(humanPlay, cpu) === "player2 winner"? score1.innerText = scoreResult(humanPlay, cpu, score1.innerText) : score2.innerText = scoreResult(humanPlay, cpu, score2.innerText);
             } else {
                 playerChoice.forEach(e => {e.removeEventListener("click", handChoice)});
-                winnerReport(score1, score2, playerHand); 
-                playAgain(playerHand);
+                winnerReport(score1.innerText, score2.innerText, playerHand); 
+                playAgain(playerHand, modal);
             }
         }
     })}
@@ -49,6 +49,10 @@ function humanVsCpu(score1, score2, playerHand) {
 function cpuChoice () {
     const random = Math.floor(Math.random() * possibleChoices.length);
     return possibleChoices[random].hand;
+}
+
+function scoreResult(player1, player2, score) {
+    return (playAlg(player1, player2) !== "pair") ? score -1 : score;
 }
 
 function playAlg(player1, player2) {
@@ -73,13 +77,7 @@ function winner(player1, player2) {
     }
 }
 
-function scoreResult(cpu1, cpu2, score1,score2) {
-    if(playAlg(cpu1, cpu2) === "player2 winner") {
-        return score1.innerText = score1.innerText -1;
-    } else if(playAlg(cpu1, cpu2) === "player1 winner") {
-        return score2.innerText = score2.innerText -1;
-    } 
-}
+
 
 function handAnimation(player1, player2) {
     const player1Hand = document.querySelector(".game-board__player1").querySelectorAll(".game-board__hand");
