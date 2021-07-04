@@ -16,4 +16,4 @@ npm install
 npm run test
 
 ## deploy link
-rock-paper-scissor-battle.netlify.app
+https://rock-paper-scissor-battle.netlify.app/
