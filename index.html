@@ -8,21 +8,20 @@
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-    <div id="myModal" class="modal">
+    <div class="start-game__modal">
         
         <!-- Modal content -->
-        <div class="modal-content">
-         
-          <span class="close">&times;</span>
+        <div class="start-game__modal-content">
           <h1>Welcome to paper, rock, scissor game!</h1>
           <label for="players">Choose how do you want to play:</label>
-          <select class="start-game__selector" id="players">
+          <select class="start-game__selector" id="players" required>
             <option class="start-game__playerNumber" value=""></li>
             <option class="start-game__playerNumber" value="Cpu vs Cpu">Cpu vs Cpu</li>
             <option class="start-game__playerNumber" value="Player vs Cpu">Player vs Cpu</li>
         </select> 
+        <div class="start-game__btn">Play</div>
         </div>
-        <button id="myBtn">Play</button>
+       
     </div>
     <main class="game-board">
         <div class="game-board__hands">

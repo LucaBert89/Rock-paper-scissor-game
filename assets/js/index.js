@@ -4,9 +4,9 @@ import { battle } from "./gameBattle.js";
 
 
 window.load = (function() {    
-    const openGame = document.querySelector("#myBtn");
+    const openGame = document.querySelector(".start-game__btn");
     const selectPlayers = document.querySelector("#players");
-
+    localStorage.removeItem("selectedValue");
     // open the game button to create the board of the game
     openGame.addEventListener("click", handCreation);
     
@@ -18,19 +18,23 @@ window.load = (function() {
 
 //creation of the game
 function handCreation() {
-    const modal = document.getElementById("myModal");
-    const playerHand = document.querySelector(".game-board__hands");
     const selectedValue = localStorage.getItem("selectedValue");
-    modal.style.display = "none";
+    if(selectedValue !== null) {
+        const modal = document.querySelector(".start-game__modal");
+        const playerHand = document.querySelector(".game-board__hands");
+        
 
-    // create the two players and the scores
-    for(let i=1; i<=2;i++) {
-        playerAndScore(i, playerHand);
+        // create the two players and the scores
+        for(let i=1; i<=2;i++) {
+            playerAndScore(i, playerHand);
+        }
+        // call the battle function with the algorithm of the game
+    
+        modal.style.display = "none";
+        battle(selectedValue, playerHand, modal);
+    } else {
+        console.log("error")
     }
-    
-    // call the battle function with the algorithm of the game
-    battle(selectedValue, playerHand, modal);
-    
 };
 
 function playerAndScore(i, playerHand) {
@@ -40,9 +44,11 @@ function playerAndScore(i, playerHand) {
 
     // creation of the board with the hands
     possibleChoices.forEach(e => {
-        const containerBoard = document.createElement("div");
+        const containerBoard = document.createElement("img");
         containerBoard.className = "game-board__hand";
-        containerBoard.innerText = e.hand;
+        containerBoard.src = `./assets/images/${e.hand}.svg`;
+        containerBoard.setAttribute("data", e.hand);
+        containerBoard.style.height = document.querySelector(".game-board__hands").offsetHeight/possibleChoices.length + "px";
         player.appendChild(containerBoard);
     })
         const score = document.createElement("div");
