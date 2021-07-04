@@ -18,6 +18,8 @@ window.load = (function() {
 
 //creation of the game
 function handCreation() {
+    document.querySelector(".start-game__selector").style.borderColor = "#fff"
+    document.querySelector(".start-game__selector").style.borderWidth = "1px"
     const selectedValue = localStorage.getItem("selectedValue");
     if(selectedValue !== null) {
         const modal = document.querySelector(".start-game__modal");
@@ -33,7 +35,8 @@ function handCreation() {
         modal.style.display = "none";
         battle(selectedValue, playerHand, modal);
     } else {
-        console.log("error")
+        document.querySelector(".start-game__selector").style.borderColor = "red"
+        document.querySelector(".start-game__selector").style.borderWidth = "5px"
     }
 };
 
