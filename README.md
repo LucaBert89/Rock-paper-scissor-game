@@ -13,6 +13,7 @@ To realize this game I used **HTML,CSS and JAVASCRIPT**. I used **Jest** for tes
 ## Test with JEST
 
 npm install
+
 npm run test
 
 ## deploy link
